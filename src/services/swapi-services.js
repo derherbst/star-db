@@ -53,7 +53,7 @@ export default class SwapiService { // класс сервис
 	// подготавливаем данные для передачи компоненту. иногда формат данных может отличаться. например не
 	// camelCase а this_notation. здесь мы и приводим все к кэмл кейсу там где надо
 
-	_transformPlanet(planet) {
+	_transformPlanet = (planet) => {
 		return {
 			id: this._extractId(planet),
 			name: planet.name,
@@ -61,9 +61,9 @@ export default class SwapiService { // класс сервис
 			rotationPeriod: planet.rotation_period,
 			diameter: planet.diameter
 		}
-	}
+	};
 
-	_transformPerson(person) {
+	_transformPerson = (person) => {
 		return {
 			id: this._extractId(person),
 			name: person.name,
@@ -71,9 +71,9 @@ export default class SwapiService { // класс сервис
 			birthYear: person.birthYear,
 			eyeColor: person.eyeColor
 		}
-	}
+	};
 
-	_transformStarship(starship) {
+	_transformStarship = (starship) => {
 		return {
 			id: this._extractId(starship),
 			name: starship.name,
@@ -85,7 +85,7 @@ export default class SwapiService { // класс сервис
 			passengers: starship.passengers,
 			cargoCapacity: starship.cargoCapacity
 		}
-	}
+	};
 }
 
 const swapi = new SwapiService();
