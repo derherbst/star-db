@@ -5,10 +5,15 @@ import RandomPlanet from '../random-planet';
 import ErrorIndicator from '../error-indicator';
 import ErrorButton from "../error-button";
 import PeoplePage from "../people-page";
+import ItemList from '../item-list';
+import PersonDetails from '../person-details';
+import SwapiService from "../../services/swapi-services";
 
 import './app.css';
 
 export default class App extends Component {
+
+	swapiService = new SwapiService();
 
 	state = {
 		showRandomPlanet: true,
@@ -51,9 +56,30 @@ export default class App extends Component {
 					</button>
 					<ErrorButton />
 				</div>
+
 				<PeoplePage />
-				<PeoplePage />
-				<PeoplePage />
+
+				<div className="row mb2">
+					<div className="col-md-6">
+						<ItemList onItemSelected={this.onPersonSelected}
+						          getData={this.swapiService.getAllPlanets} // получение данных теперь происходит в апп, компонент отвечает только за рендеринг
+						/>
+					</div>
+					<div className="col-md-6">
+						<PersonDetails personId={this.state.selectedPerson}/>
+					</div>
+				</div>
+
+				<div className="row mb2">
+					<div className="col-md-6">
+						<ItemList onItemSelected={this.onPersonSelected}
+						          getData={this.swapiService.getAllStarships}
+						/>
+					</div>
+					<div className="col-md-6">
+						<PersonDetails personId={this.state.selectedPerson}/>
+					</div>
+				</div>
 			</div>
 		);
 	}
