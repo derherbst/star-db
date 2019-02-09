@@ -9,7 +9,7 @@ export default class ItemList extends Component {
 		itemList: null
 	};
 
-	componentDidMount() {
+	componentDidMount() { // компонент уже отренедерился
 
 		const { getData } = this.props;
 
@@ -24,7 +24,7 @@ export default class ItemList extends Component {
 	renderItems(arr) {
 		return arr.map((item) => {
 			const { id } = item;
-			const label = this.props.renderItem(item);
+			const label = this.props.children(item);
 			return(
 				<li className="list-group-item"
 				    key={ id }
