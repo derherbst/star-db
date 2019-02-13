@@ -36,7 +36,11 @@ export default class PeoplePage extends Component {
 
 		const personDetails = (
 			<ErrorBoundry>
-				<ItemDetails itemId={this.state.selectedPerson} getData={this.swapiService.getPerson}/>
+				<ItemDetails
+					itemId={this.state.selectedPerson}
+					getData={this.swapiService.getPerson}
+					getImageUrl={ this.swapiService.getPersonImage }
+				/>
 			</ErrorBoundry>
 		);
 

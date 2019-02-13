@@ -4,7 +4,15 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ErrorIndicator from '../error-indicator';
 import SwapiService from "../../services/swapi-services";
+import PeoplePage from "../people-page/people-page";
 import Row from "../row";
+import { PersonDetails,
+	PlanetDetails,
+	StarshipDetails,
+	PersonList,
+	PlanetList,
+	StarshipList
+} from "../sw-components";
 
 import './app.css';
 import ErrorBoundry from "../error-boundry/error-boundry";
@@ -44,7 +52,11 @@ export default class App extends Component {
 		const { getPerson,
 				getStarship,
 				getPersonImage,
-				getStarshipImage } = this.swapiService;
+				getStarshipImage,
+				getAllPeople,
+				getAllPlanets,
+				getAllStarships
+		} = this.swapiService;
 
 		//* из сервиса берем функц для получ ссылки. сюда попадет id из details*/}
 
@@ -78,22 +90,10 @@ export default class App extends Component {
 			<ErrorBoundry>
 				<div className="stardb-app">
 					<Header />
+					<PersonDetails itemId={11}/>
 
-					<Row
-						left={personDetails}
-						right={starshipDetails}
-					/>
-					{/*{ planet }*/}
-					{/*<div className='row mb2 button-row'>*/}
-						{/*<button*/}
-							{/*className="toggle-planet btn btn-warning btn-lg"*/}
-							{/*onClick={this.toggleRandomPlanet}*/}
-						{/*>*/}
-							{/*Toggle Random Planet*/}
-						{/*</button>*/}
-						{/*<ErrorButton />*/}
-					{/*</div>*/}
-					{/*<PeoplePage />*/}
+					<PersonList />
+					<StarshipList />
 				</div>
 			</ErrorBoundry>
 		);
