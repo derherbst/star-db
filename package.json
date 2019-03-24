@@ -23,5 +23,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-plugin-react-css-modules": "^5.2.1",
+    "react-css-modules": "^4.7.9"
+  }
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import './item-details.css';
 import Spinner from '../spinner';
-import ErrorButton from "../error-button";
 
 const Record = ({ item, field, label }) => {
 	return (
@@ -28,7 +27,9 @@ export default class ItemDetails extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.itemId !== prevProps.itemId) {
+		if (this.props.itemId !== prevProps.itemId ||
+			this.props.getData !== prevProps.getData ||
+			this.props.getImageUrl !== prevProps.getImageUrl) {
 			this.setState({
 				loading: true
 			});

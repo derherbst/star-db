@@ -4,35 +4,36 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ErrorIndicator from '../error-indicator';
 import SwapiService from "../../services/swapi-services";
-import PeoplePage from "../people-page/people-page";
-import Row from "../row";
-import { PersonDetails,
-	PlanetDetails,
-	StarshipDetails,
-	PersonList,
-	PlanetList,
-	StarshipList
-} from "../sw-components";
+import DummySwapiService from '../../services/dummy-swapi-service';
+
+import {
+	PeoplePage,
+	PlanetsPage,
+	StarshipsPage
+} from '../pages';
+
+import { SwapiServiceProvider } from "../swapi-service-context";
+
+import ErrorBoundry from "../error-boundry/error-boundry";
 
 import './app.css';
-import ErrorBoundry from "../error-boundry/error-boundry";
-import ItemDetails, { Record } from "../item-details/item-details";
 
 export default class App extends Component {
 
-	swapiService = new SwapiService();
-
 	state = {
-		showRandomPlanet: true,
-		hasError: false
+
+		hasError: false,
+		swapiService: new SwapiService()
 	};
 
-	toggleRandomPlanet = () => {
-		this.setState((state) => {
+	onServiceChange = () => {
+		this.setState(( { swapiService } ) => {
+			const Service = swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+
 			return {
-				showRandomPlanet: !state.showRandomPlanet
+				swapiService: new Service()
 			}
-		});
+		})
 	};
 
 	componentDidCatch() {
@@ -47,54 +48,19 @@ export default class App extends Component {
 			return <ErrorIndicator />
 		}
 
-		const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
-
-		const { getPerson,
-				getStarship,
-				getPersonImage,
-				getStarshipImage,
-				getAllPeople,
-				getAllPlanets,
-				getAllStarships
-		} = this.swapiService;
-
-		//* из сервиса берем функц для получ ссылки. сюда попадет id из details*/}
-
-		const personDetails = (
-			<ItemDetails
-				itemId={11}
-				getData={ getPerson }
-				getImageUrl={ getPersonImage }
-			>
-				{/* для вывода строк свойств айтема. чтобы работать такому полю нужен field, label и item
-				 item здесь нет но мы можем взять его из item-details. поэтому передаем Record в кач-ве props.children
-				 */}
-				<Record field="gender" label="Gender" />
-				<Record field="eyeColor" label="Eye Color" />
-			</ItemDetails>
-		);
-
-		const starshipDetails = (
-			<ItemDetails
-				itemId={5}
-				getData={ getStarship }
-				getImageUrl={ getStarshipImage }
-			>
-				<Record field="model" label="Model" />
-				<Record field="length" label="Length" />
-				<Record field="costInCredits" label="Cost" />
-			</ItemDetails>
-		);
-
 		return (
 			<ErrorBoundry>
-				<div className="stardb-app">
-					<Header />
-					<PersonDetails itemId={11}/>
+				<SwapiServiceProvider value={this.state.swapiService} >
+					<div className="stardb-app">
+						<Header onServiceChange={this.onServiceChange}/>
 
-					<PersonList />
-					<StarshipList />
-				</div>
+						<RandomPlanet />
+
+						<PeoplePage />
+						<PlanetsPage/>
+						<StarshipsPage/>
+					</div>
+				</SwapiServiceProvider>
 			</ErrorBoundry>
 		);
 	}

@@ -26,4 +26,8 @@ const ItemList = (props) => {
 	);
 };
 
+ItemList.defaultProps = {  // можно через статик
+	onItemSelected: () => {}
+};
+
 export default ItemList;

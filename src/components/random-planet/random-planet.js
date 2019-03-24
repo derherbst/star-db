@@ -8,6 +8,22 @@ import './random-planet.css';
 
 export default class RandomPlanet extends Component {
 
+	static defaultProps = {  // новый синтаксис
+		updateInterval: 10000
+	};
+
+	static propTypes = {
+		updateInterval: (props, propName, componentName) => {
+			const value = props[propName];
+
+			if (typeof value === 'number' && !isNaN(value)) {
+				return null
+			}
+
+			return new TypeError(`${componentName}: ${propName} must be number`);
+		}
+	};
+
 	swapiService = new SwapiService();
 
 	state = {
@@ -18,8 +34,9 @@ export default class RandomPlanet extends Component {
 
 	componentDidMount() { // означает, что компонент уже подключен. используем вместо контруктора. получение данных и тп
 		// при каждом новом построении компонента будет выполняться эта функция
+		const { updateInterval } = this.props;
 		this.updatePlanet();
-		this.interval = setInterval(this.updatePlanet, 1500);
+		this.interval = setInterval(this.updatePlanet, updateInterval);
 	}
 
 	componentWillUnmount() {
