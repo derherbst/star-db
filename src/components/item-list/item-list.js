@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './item-list.css';
 
@@ -28,6 +29,12 @@ const ItemList = (props) => {
 
 ItemList.defaultProps = {  // можно через статик
 	onItemSelected: () => {}
+};
+
+ItemList.propTypes = {
+	onItemSelected: PropTypes.func,
+	data: PropTypes.arrayOf(PropTypes.object).isRequired,
+	children: PropTypes.func
 };
 
 export default ItemList;
